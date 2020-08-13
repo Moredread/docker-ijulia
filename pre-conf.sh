@@ -7,13 +7,15 @@
  /bin/bash /Miniconda3-latest-Linux-x86_64.sh -f -b -p $CONDA_DIR
  rm Miniconda3-latest-Linux-x86_64.sh
 
+conda update -n base -c defaults conda
+
 conda create -n conda_jl python
 julia -e 'using Pkg ; Pkg.add("Conda") ; Pkg.build("Conda") ; '
 
 conda install --yes -c conda-forge jupyter ipywidgets pandas matplotlib ipyparallel jupyterlab \
 scipy seaborn scikit-learn scikit-image sympy cython patsy statsmodels cloudpickle dill numba bokeh
 
-ln -s /opt/conda/pkgs/zeromq-4.0.*/lib/libzmq.so.4.* /opt/conda/lib/libzmq.so.4 
+ln -s /opt/conda/pkgs/zeromq-4.0.*/lib/libzmq.so.4.* /opt/conda/lib/libzmq.so.4
 ln -s /opt/conda/pkgs/libsodium-0.4.*/lib/libsodium.so.4.* /opt/conda/lib/libsodium.so.4
 
 jupyter notebook --generate-config
@@ -23,6 +25,8 @@ JUPYTER=$(which jupyter) julia -e 'using Pkg ; Pkg.add("DataFrames"); Pkg.add("R
 JUPYTER=$(which jupyter) julia -e 'using Pkg ; Pkg.add("Optim"); Pkg.add("JuMP"); Pkg.add("GLPKMathProgInterface"); Pkg.add("Clp"); Pkg.add("NLopt"); Pkg.add("Ipopt");'
 JUPYTER=$(which jupyter) julia -e 'using Pkg ; Pkg.add("Images"); Pkg.add("ImageView"); Pkg.add("WAV"); Pkg.add("ODE"); Pkg.add("Sundials");'
 JUPYTER=$(which jupyter) julia -e 'using Pkg ; Pkg.add("BayesNets"); Pkg.add("PGFPlots"); Pkg.add("Winston");'
+JUPYTER=$(which jupyter) julia -e 'using Pkg ; Pkg.add("BenchmarkTools");'
+
 JUPYTER=$(which jupyter) julia -e 'using Pkg ; Pkg.update();'
 
 # adding iPython Clusters
